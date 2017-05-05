@@ -10,16 +10,19 @@ fi
 
 echo "Updating zynthian-sys ..."
 cd $ZYNTHIAN_SYS_DIR
-cp -fa ./scripts/zynthian_envars.sh /tmp
-git checkout ./scripts/zynthian_envars.sh
-git pull origin $ZYNTHIAN_SYS_BRANCH
-cp -fa /tmp/zynthian_envars.sh ./scripts
+git checkout .
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git fetch origin
+git checkout webconf
+git pull
+
 cd ./scripts
 ./update_zynthian_sys.sh
 ./update_zynthian_recipes.sh
 
 echo "Updating zyncoder ..."
 cd $ZYNTHIAN_DIR/zyncoder
+git checkout .
 git pull
 cd build
 cmake ..
@@ -27,8 +30,10 @@ make
 
 echo "Updating zynthian-ui ..."
 cd $ZYNTHIAN_UI_DIR
-cp -fa ./zynthian_gui_config.py /tmp
-git checkout ./zynthian_gui_config.py
-git pull origin $ZYNTHIAN_UI_BRANCH
-cp -fa ./zynthian_gui_config.py ./zynthian_gui_config_new.py
-cp -fa /tmp/zynthian_gui_config.py .
+git checkout .
+git pull
+
+echo "Updating zynthian-webconf ..."
+cd $ZYNTHIAN_DIR/zynthian-webconf
+git checkout .
+git pull
